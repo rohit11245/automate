@@ -4,9 +4,11 @@ package com.signzy.automate.web;
 import com.signzy.automate.exception.RecordNotFoundException;
 import com.signzy.automate.model.DeviceEntity;
 import com.signzy.automate.service.DeviceService;
+import jdk.jfr.internal.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @RestController
-@RequestMapping("/devices")
+@RequestMapping(value = "/devices")
 public class DeviceController
 {
     @Autowired
@@ -37,13 +39,8 @@ public class DeviceController
     }
  
     @PostMapping
-    public ResponseEntity<DeviceEntity> createOrUpdateDevice(HttpServletRequest request, HttpServletResponse response)
+    public ResponseEntity<DeviceEntity> createOrUpdateDevice(@RequestBody DeviceEntity device)
                                                     throws RecordNotFoundException {
-      String location = request.getParameter("location");
-        String deviceName = request.getParameter("deviceName");
-        DeviceEntity device =new DeviceEntity();
-        device.setDeviceName(deviceName);
-        device.setLocation(location);
         DeviceEntity updated = service.createOrUpdateDevice(device);
         return new ResponseEntity<DeviceEntity>(updated, new HttpHeaders(), HttpStatus.OK);
     }

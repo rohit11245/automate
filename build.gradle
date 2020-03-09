@@ -6,11 +6,20 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '2.1.5.RELEASE'
     id 'io.spring.dependency-management' version '1.0.7.RELEASE'
+    id 'org.siouan.frontend' version '1.1.0'
+
 }
 repositories {
     mavenCentral()
 
 
+}
+frontend {
+    nodeVersion = '10.15.3'
+    // See 'scripts' section in your 'package.json file'
+    cleanScript = 'run clean'
+    assembleScript = 'run assemble'
+    checkScript = 'run check'
 }
 
 dependencies {
